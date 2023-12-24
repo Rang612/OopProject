@@ -30,6 +30,8 @@ module java {
     opens com.example.backend.CrawlData.NftFloor.Binance to com.google.gson;
     opens com.example.backend.CrawlData.NftFloor.NiftyGateway to com.google.gson;
     opens com.example.backend.CrawlData.NftFloor.Rarible to com.google.gson;
+    opens com.example.backend.Model.Twitter to com.google.gson, javafx.base;
+
     opens com.example.forntend to javafx.fxml;
     exports com.example.forntend;
     opens com.example.backend.exceptionhand to com.google.gson;

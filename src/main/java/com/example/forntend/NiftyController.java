@@ -27,6 +27,11 @@ public class NiftyController extends SwitchLayout implements Initializable {
 //    private Button Exit1;
 
     @FXML
+    private Button oneday;
+    @FXML
+    private Button sevenday;
+
+    @FXML
     private Label Menu;
 
     @FXML
@@ -39,11 +44,6 @@ public class NiftyController extends SwitchLayout implements Initializable {
     private Button binance;
     @FXML
     private Button nifty;
-    @FXML
-    private Button oneday;
-
-    @FXML
-    private Button opensea;
 
     @FXML
     private Button rarible;
@@ -74,8 +74,17 @@ public class NiftyController extends SwitchLayout implements Initializable {
     private TableColumn<NFT, Double> volumecol;
     @FXML
     private TableColumn<NFT, Double> volumeChangecol;
+    @FXML
+    private Button collectionButton;
+    @FXML
+    private Button priceButton;
+    @FXML
+    private TextField maxPrice;
 
-
+    @FXML
+    private TextField minPrice;
+    private  String onedayOriginal;
+    private String sevendayOriginal;
     private Stack<Scene> sceneStack = new Stack<>();
     NFTJsonReader op = new NFTJsonReader();
     @Override
@@ -115,11 +124,38 @@ public class NiftyController extends SwitchLayout implements Initializable {
                 MenuBack.setVisible(false);
             });
         });
+        sevenday.setOnMouseClicked(event ->{
+            sevenday.setOnAction(e -> {
+                // Đổi màu của button khi sự kiện xảy ra
+                sevenday.setStyle("-fx-background-color: #EC326DE0;");
+                oneday.setStyle("-fx-background-color: #cc4b4c;");
+            });
+            Nifty7D();
+        });
+        oneday.setOnMouseClicked(event ->{
+            oneday.setOnAction(e -> {
+                // Đổi màu của button khi sự kiện xảy ra
+                oneday.setStyle("-fx-background-color: #EC326DE0;");
+                sevenday.setStyle("-fx-background-color: #cc4b4c;");
+            });
+            Nifty1D();
+        });
+        collectionButton.setOnMouseClicked(event -> TextFieldKeywordSearch());
+        priceButton.setOnMouseClicked(event -> FloorPriceSearch());
         Nifty1D();
         //SearchbyName("Az");
 
     }
 
+    public void TextFieldKeywordSearch(){
+        String searchTerm = searchText.getText();
+        SearchByName(searchTerm);
+    }
+    public void FloorPriceSearch(){
+        String min = minPrice.getText();
+        String max = maxPrice.getText();
+        SearchByPriceFloor(Double.parseDouble(min), Double.parseDouble(max));
+    }
     // SetTable
     public void initializeTableView(ObservableList<NFT> list) {
         namecol.setCellValueFactory(new PropertyValueFactory<NFT, String>("name"));
@@ -144,7 +180,32 @@ public class NiftyController extends SwitchLayout implements Initializable {
         ObservableList<NFT> list = FXCollections.observableList(nftList);
         initializeTableView(list);
     }
+    public void SearchByName(String s){
+        List<NFT> NFTlist = op.readNFTJson("data//NiftyGateway1D.json");
+        ObservableList<NFT> list = FXCollections.observableList(NFTlist);
+        ObservableList<NFT> sName = FXCollections.observableArrayList();
+        for (NFT nft: list){
+            if (nft.getName().toLowerCase().contains(s.toLowerCase())) {
+                sName.add(nft);
+                //System.out.println(nft);
+            }
+        }
+        initializeTableView(sName);
+    }
+    public void SearchByPriceFloor(double min, double max){
+        List<NFT> NFTlist = op.readNFTJson("data//NiftyGateway1D.json");
 
+        ObservableList<NFT> list = FXCollections.observableList(NFTlist);
+        ObservableList<NFT> sPrice = FXCollections.observableArrayList();
+        for (NFT nft: list){
+            if (nft.getFloorPrice() >= min) {
+                if (nft.getFloorPrice() <= max){
+                    sPrice.add(nft);
+                }
+            }
+        }
+        initializeTableView(sPrice);
+    }
 
 
 }

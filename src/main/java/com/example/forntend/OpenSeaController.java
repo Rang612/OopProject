@@ -2,6 +2,7 @@ package com.example.forntend;
 
 import com.example.backend.JsonRead.NFTJsonReader;
 import com.example.backend.Model.NftFloor.NFT;
+import com.example.backend.Model.Twitter.Tweet;
 import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,6 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -41,6 +43,8 @@ public class OpenSeaController extends SwitchLayout implements Initializable {
     private Button nifty;
     @FXML
     private Button oneday;
+    @FXML
+    private Button sevenday;
 
     @FXML
     private Button opensea;
@@ -74,33 +78,26 @@ public class OpenSeaController extends SwitchLayout implements Initializable {
     private TableColumn<NFT, Double> volumecol;
     @FXML
     private TableColumn<NFT, Double> volumeChangecol;
+    @FXML
+    private Button collectionButton;
+    @FXML
+    private Button priceButton;
+    @FXML
+    private TextField maxPrice;
 
+    @FXML
+    private TextField minPrice;
+
+    private  String onedayOriginal;
+    private String sevendayOriginal;
 
     private Stack<Scene> sceneStack = new Stack<>();
     NFTJsonReader op = new NFTJsonReader();
-    //List<NFT> nftList = new ArrayList<>();
-    //ObservableList<NFT> list = FXCollections.observableArrayList();
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-
-
         Exit.setOnMouseClicked(event -> {
             System.exit(0);
         });
-//        binance.setOnMouseClicked(event -> {
-//            BinanceSelect1D();
-////            initializeTableView(list);
-//            oneday.setOnMouseClicked(event ->{
-//                BinanceSelect7D();
-//            });
-//        });
-
-
-
-
         slider.setTranslateX(-176);
         Menu.setOnMouseClicked(event -> {
             TranslateTransition slide = new TranslateTransition();
@@ -118,6 +115,22 @@ public class OpenSeaController extends SwitchLayout implements Initializable {
             });
         });
 
+       sevenday.setOnMouseClicked(event ->{
+            sevenday.setOnAction(e -> {
+                // Đổi màu của button khi sự kiện xảy ra
+                sevenday.setStyle("-fx-background-color: #EC326DE0;");
+                oneday.setStyle("-fx-background-color: #cc4b4c;");
+            });
+            OpenSea7D();
+        });
+        oneday.setOnMouseClicked(event ->{
+            oneday.setOnAction(e -> {
+                // Đổi màu của button khi sự kiện xảy ra
+                oneday.setStyle("-fx-background-color: #EC326DE0;");
+                sevenday.setStyle("-fx-background-color: #cc4b4c;");
+            });
+            OpenSea1D();
+        });
         MenuBack.setOnMouseClicked(event -> {
             TranslateTransition slide = new TranslateTransition();
             slide.setDuration(Duration.seconds(0.4));
@@ -133,45 +146,21 @@ public class OpenSeaController extends SwitchLayout implements Initializable {
                 MenuBack.setVisible(false);
             });
         });
+        collectionButton.setOnMouseClicked(event -> TextFieldKeywordSearch());
+        priceButton.setOnMouseClicked(event -> FloorPriceSearch());
         OpenSea1D();
-        //SearchbyName("Az");
+
 
     }
-
-//    private Stage stage;
-//    private Scene scene;
-//
-//    public void switchToHome(ActionEvent event) throws IOException {
-//        Parent root = FXMLLoader.load(getClass().getResource("home.fxml"));
-//        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-//        scene = new Scene(root);
-//        stage.setScene(scene);
-//        stage.show();
-//    }
-//    public void switchToBlog(ActionEvent event) throws IOException {
-//        Parent root = FXMLLoader.load(getClass().getResource("blog.fxml"));
-//        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-//        scene = new Scene(root);
-//        stage.setScene(scene);
-//        stage.show();
-//    }
-//
-//    public void switchToTwitter(ActionEvent event) throws IOException {
-//        Parent root = FXMLLoader.load(getClass().getResource("Twitter.fxml"));
-//        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-//        scene = new Scene(root);
-//        stage.setScene(scene);
-//        stage.show();
-//    }
-//
-//    public void switchToNFT(ActionEvent event) throws IOException {
-//        Parent root = FXMLLoader.load(getClass().getResource("NFT-page.fxml"));
-//        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-//        scene = new Scene(root);
-//        stage.setScene(scene);
-//        stage.show();
-//    }
-
+    public void TextFieldKeywordSearch(){
+        String searchTerm = searchText.getText();
+        SearchByName(searchTerm);
+    }
+    public void FloorPriceSearch(){
+        String min = minPrice.getText();
+        String max = maxPrice.getText();
+        SearchByPriceFloor(Double.parseDouble(min), Double.parseDouble(max));
+    }
 
     // SetTable
     public void initializeTableView(ObservableList<NFT> list) {
@@ -182,7 +171,6 @@ public class OpenSeaController extends SwitchLayout implements Initializable {
         totalSupplycol.setCellValueFactory(new PropertyValueFactory<NFT, Integer>("totalSupply"));
         volumecol.setCellValueFactory(new PropertyValueFactory<NFT, Double>("volume"));
         floorPricecol.setCellValueFactory(new PropertyValueFactory<NFT, Double>("floorPrice"));
-        //numOfSalescol.setCellValueFactory(new PropertyValueFactory<NFT, Integer>("numOfSales"));
         volumeChangecol.setCellValueFactory(new PropertyValueFactory<NFT, Double>("volumeChange"));
         view.setItems(list);
     }
@@ -197,7 +185,7 @@ public class OpenSeaController extends SwitchLayout implements Initializable {
 //        }
 //        initializeTableView(sName);
 //    }
-public void OpenSea7D(){
+    public void OpenSea7D(){
         List<NFT> nftList = op.readNFTJson("data//OpenSea7D.json");
         ObservableList<NFT> list = FXCollections.observableList(nftList);
         initializeTableView(list);
@@ -207,7 +195,30 @@ public void OpenSea7D(){
         ObservableList<NFT> list = FXCollections.observableList(nftList);
         initializeTableView(list);
     }
+    public void SearchByName(String s){
+        List<NFT> NFTlist = op.readNFTJson("data//OpenSea1D.json");
+        ObservableList<NFT> list = FXCollections.observableList(NFTlist);
+        ObservableList<NFT> sName = FXCollections.observableArrayList();
+        for (NFT nft: list){
+            if (nft.getName().toLowerCase().contains(s.toLowerCase())) {
+                sName.add(nft);
+                //System.out.println(nft);
+            }
+        }
+        initializeTableView(sName);
+    }
+    public void SearchByPriceFloor(double min, double max){
+        List<NFT> NFTlist = op.readNFTJson("data//OpenSea1D.json");
 
-
-
+        ObservableList<NFT> list = FXCollections.observableList(NFTlist);
+        ObservableList<NFT> sPrice = FXCollections.observableArrayList();
+        for (NFT nft: list){
+            if (nft.getFloorPrice() >= min) {
+                if (nft.getFloorPrice() <= max){
+                    sPrice.add(nft);
+                }
+            }
+        }
+        initializeTableView(sPrice);
+    }
 }

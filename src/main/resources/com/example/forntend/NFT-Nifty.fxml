@@ -57,12 +57,6 @@
             <TableColumn fx:id="floorPricecol" prefWidth="131.0" text="Floor Price" />
          </columns>
       </TableView>
-      <HBox layoutX="726.0" layoutY="215.0" prefHeight="25.0" prefWidth="124.0">
-         <children>
-            <Button fx:id="oneday" mnemonicParsing="false" prefHeight="45.0" prefWidth="58.0" styleClass="button3" stylesheets="file:/D:/Downloads/NFTs/oops_NFT-main/src/main/java/com/example/forntend/css/view.css" text="1d" />
-            <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="58.0" styleClass="button3" stylesheets="file:/D:/Downloads/NFTs/oops_NFT-main/src/main/java/com/example/forntend/css/view.css" text="7d" />
-         </children>
-      </HBox>
       <Text layoutX="453.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search:">
          <font>
             <Font name="System Bold" size="14.0" />
@@ -74,14 +68,14 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Text>
-      <TextField layoutX="511.0" layoutY="110.0" prefHeight="26.0" prefWidth="47.0" promptText="Min" />
+      <TextField fx:id="minPrice" layoutX="511.0" layoutY="110.0" prefHeight="26.0" prefWidth="47.0" promptText="Min" />
       <Text layoutX="522.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" />
-      <TextField layoutX="579.0" layoutY="110.0" prefHeight="26.0" prefWidth="47.0" promptText="Max" />
+      <TextField fx:id="maxPrice" layoutX="579.0" layoutY="110.0" prefHeight="26.0" prefWidth="47.0" promptText="Max" />
       <Pane prefHeight="25.0" prefWidth="850.0" style="-fx-background-color: #FF5072;">
          <children>
             <ImageView fitHeight="24.0" fitWidth="58.0" layoutX="-18.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../java/com/example/forntend/image/niftygateway-logo.png" />
+                  <Image url="file:/D:/Downloads/NFTs/oops_NFT-main/src/main/java/com/example/forntend/image/niftygateway-logo.png" />
                </image>
             </ImageView>
             <Label layoutX="33.0" prefHeight="25.0" prefWidth="139.0" text="NIFTY GATEWAY" textFill="#0a0a0a">
@@ -202,7 +196,13 @@
             </VBox>
          </children>
       </Pane>
-      <Button layoutX="708.0" layoutY="76.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="58.0" styleClass="button5" stylesheets="file:/D:/Downloads/NFTs/oops_NFT-main/src/main/java/com/example/forntend/css/view.css" text="Search" />
-      <Button layoutX="642.0" layoutY="111.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="58.0" styleClass="button5" stylesheets="file:/D:/Downloads/NFTs/oops_NFT-main/src/main/java/com/example/forntend/css/view.css" text="Search" />
+      <HBox layoutX="727.0" layoutY="215.0" prefHeight="25.0" prefWidth="124.0">
+         <children>
+            <Button fx:id="oneday" mnemonicParsing="false" prefHeight="45.0" prefWidth="58.0" styleClass="button3" stylesheets="file:/D:/Downloads/NFTs/oops_NFT-main/src/main/java/com/example/forntend/css/view.css" text="1d" />
+            <Button fx:id="sevenday" mnemonicParsing="false" prefHeight="45.0" prefWidth="58.0" styleClass="button3" stylesheets="file:/D:/Downloads/NFTs/oops_NFT-main/src/main/java/com/example/forntend/css/view.css" text="7d" />
+         </children>
+      </HBox>
+      <Button fx:id="collectionButton" layoutX="713.0" layoutY="76.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="58.0" styleClass="button5" stylesheets="file:/D:/Downloads/NFTs/oops_NFT-main/src/main/java/com/example/forntend/css/view.css" text="Search" />
+      <Button fx:id="priceButton" layoutX="647.0" layoutY="111.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="58.0" styleClass="button5" stylesheets="file:/D:/Downloads/NFTs/oops_NFT-main/src/main/java/com/example/forntend/css/view.css" text="Search" />
    </children>
 </AnchorPane>
