@@ -1,4 +1,4 @@
-package com.example.forntend;//package com.example.forntend;
+package com.example.forntend;
 
 import com.example.backend.JsonRead.NFTJsonReader;
 import com.example.backend.Model.NftFloor.NFT;
@@ -7,25 +7,24 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.List;
+import java.util.ResourceBundle;
+import java.util.Stack;
 
-public class NftFloorController extends SwitchLayout implements Initializable {
-
+public class BinanceController extends SwitchLayout implements Initializable {
     @FXML
     private Button Exit;
+
+//    @FXML
+//    private Button Exit1;
 
     @FXML
     private Label Menu;
@@ -38,22 +37,8 @@ public class NftFloorController extends SwitchLayout implements Initializable {
 
     @FXML
     private Button binance;
-
-    @FXML
-    private TableColumn<?, ?> floorPricecol;
-
-    @FXML
-    private TableColumn<?, ?> idcol;
-
-    @FXML
-    private TableColumn<?, ?> namecol;
-
     @FXML
     private Button nifty;
-
-    @FXML
-    private TableColumn<?, ?> numOwnerscol;
-
     @FXML
     private Button oneday;
 
@@ -68,24 +53,31 @@ public class NftFloorController extends SwitchLayout implements Initializable {
 
     @FXML
     private Pane slider;
+    @FXML
+    private TableView<NFT> view;
+    @FXML
+    private TableColumn<NFT, Double> floorPricecol;
 
     @FXML
-    private TableColumn<?, ?> totalSupplycol;
+    private TableColumn<NFT, String> idcol;
 
     @FXML
-    private TableColumn<?, ?> url;
+    private TableColumn<NFT, String> namecol;
 
     @FXML
-    private TableView<?> view;
-
+    private TableColumn<NFT, Integer> numOwnerscol;
     @FXML
-    private TableColumn<?, ?> volumeChangecol;
-
+    private TableColumn<NFT, String> urlcol;
     @FXML
-    private TableColumn<?, ?> volumecol;
+    private TableColumn<NFT, Integer> totalSupplycol;
+    @FXML
+    private TableColumn<NFT, Double> volumecol;
+    @FXML
+    private TableColumn<NFT, Double> volumeChangecol;
 
-//    private Stack<Scene> sceneStack = new Stack<>();
-//    NFTJsonReader op = new NFTJsonReader();
+
+    private Stack<Scene> sceneStack = new Stack<>();
+    NFTJsonReader op = new NFTJsonReader();
     //List<NFT> nftList = new ArrayList<>();
     //ObservableList<NFT> list = FXCollections.observableArrayList();
 
@@ -141,7 +133,7 @@ public class NftFloorController extends SwitchLayout implements Initializable {
                 MenuBack.setVisible(false);
             });
         });
-
+        BinanceSelect1D();
         //SearchbyName("Az");
 
     }
@@ -182,19 +174,19 @@ public class NftFloorController extends SwitchLayout implements Initializable {
 
 
     // SetTable
-//    public void initializeTableView(ObservableList<NFT> list) {
-//        namecol.setCellValueFactory(new PropertyValueFactory<NFT, String>("name"));
-//        idcol.setCellValueFactory(new PropertyValueFactory<NFT, String>("id"));
-//        //urlcol.setCellValueFactory(new PropertyValueFactory<NFT, String>("url"));
-//        numOwnerscol.setCellValueFactory(new PropertyValueFactory<NFT, Integer>("numOwners"));
-//        totalSupplycol.setCellValueFactory(new PropertyValueFactory<NFT, Integer>("totalSupply"));
-//        volumecol.setCellValueFactory(new PropertyValueFactory<NFT, Double>("volume"));
-//        floorPricecol.setCellValueFactory(new PropertyValueFactory<NFT, Double>("floorPrice"));
-//        //numOfSalescol.setCellValueFactory(new PropertyValueFactory<NFT, Integer>("numOfSales"));
-//        volumeChangecol.setCellValueFactory(new PropertyValueFactory<NFT, Double>("volumeChange"));
-//        view.setItems(list);
-//    }
-//    //Tìm kiếm theo tên NFT
+    public void initializeTableView(ObservableList<NFT> list) {
+        namecol.setCellValueFactory(new PropertyValueFactory<NFT, String>("name"));
+        idcol.setCellValueFactory(new PropertyValueFactory<NFT, String>("id"));
+        //urlcol.setCellValueFactory(new PropertyValueFactory<NFT, String>("url"));
+        numOwnerscol.setCellValueFactory(new PropertyValueFactory<NFT, Integer>("numOwners"));
+        totalSupplycol.setCellValueFactory(new PropertyValueFactory<NFT, Integer>("totalSupply"));
+        volumecol.setCellValueFactory(new PropertyValueFactory<NFT, Double>("volume"));
+        floorPricecol.setCellValueFactory(new PropertyValueFactory<NFT, Double>("floorPrice"));
+        //numOfSalescol.setCellValueFactory(new PropertyValueFactory<NFT, Integer>("numOfSales"));
+        volumeChangecol.setCellValueFactory(new PropertyValueFactory<NFT, Double>("volumeChange"));
+        view.setItems(list);
+    }
+    //    //Tìm kiếm theo tên NFT
 //    public void SearchbyName(String s){
 //        ObservableList<NFT> sName = FXCollections.observableArrayList();
 //        for (NFT nft: list){
@@ -205,9 +197,16 @@ public class NftFloorController extends SwitchLayout implements Initializable {
 //        }
 //        initializeTableView(sName);
 //    }
-
-
+    public void BinanceSelect1D(){
+        List<NFT> nftList = op.readNFTJson("data//Binance1D.json");
+        ObservableList<NFT> list = FXCollections.observableList(nftList);
+        initializeTableView(list);
+    }
+    public void BinanceSelect7D(){
+        List<NFT> nftList = op.readNFTJson("data//Binance7D.json");
+        ObservableList<NFT> list = FXCollections.observableList(nftList);
+        initializeTableView(list);
+    }
 
 
 }
-

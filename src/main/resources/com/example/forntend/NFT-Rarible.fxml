@@ -14,8 +14,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="850.0" style="-fx-background-color: #F7ABAD;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.forntend.NftFloorController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="850.0" style="-fx-background-color: #F7ABAD;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.forntend.RaribleController">
    <children>
+      <ImageView fitHeight="96.0" fitWidth="130.0" layoutY="124.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="file:/D:/Downloads/NFTs/oops_NFT-main/src/main/java/com/example/forntend/image/tải%20xuống%20(1).png" />
+         </image>
+      </ImageView>
       <Pane layoutY="67.0" prefHeight="40.0" prefWidth="373.0">
          <children>
             <Button fx:id="binance" layoutX="208.0" layoutY="1.0" mnemonicParsing="false" onAction="#switchToBinace" prefHeight="40.0" prefWidth="71.0" styleClass="button4" stylesheets="file:/D:/Downloads/NFTs/oops_NFT-main/src/main/java/com/example/forntend/css/view.css" text="BINANCE">
@@ -23,7 +28,7 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="rarible" layoutX="288.0" layoutY="1.0" mnemonicParsing="false" onAction="#switchToBinace" prefHeight="40.0" prefWidth="71.0" styleClass="button4" stylesheets="file:/D:/Downloads/NFTs/oops_NFT-main/src/main/java/com/example/forntend/css/view.css" text="RARIBLE">
+            <Button fx:id="rarible" layoutX="288.0" layoutY="1.0" mnemonicParsing="false" onAction="#switchToRarible" prefHeight="40.0" prefWidth="71.0" styleClass="button6" stylesheets="file:/D:/Downloads/NFTs/oops_NFT-main/src/main/java/com/example/forntend/css/view.css" text="RARIBLE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -52,7 +57,7 @@
             <TableColumn fx:id="floorPricecol" prefWidth="131.0" text="Floor Price" />
          </columns>
       </TableView>
-      <HBox layoutY="158.0" prefHeight="24.0" prefWidth="234.0">
+      <HBox layoutX="726.0" layoutY="215.0" prefHeight="25.0" prefWidth="124.0">
          <children>
             <Button fx:id="oneday" mnemonicParsing="false" prefHeight="45.0" prefWidth="58.0" styleClass="button3" stylesheets="file:/D:/Downloads/NFTs/oops_NFT-main/src/main/java/com/example/forntend/css/view.css" text="1d" />
             <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="58.0" styleClass="button3" stylesheets="file:/D:/Downloads/NFTs/oops_NFT-main/src/main/java/com/example/forntend/css/view.css" text="7d" />
@@ -74,12 +79,12 @@
       <TextField layoutX="579.0" layoutY="110.0" prefHeight="26.0" prefWidth="47.0" promptText="Max" />
       <Pane prefHeight="25.0" prefWidth="850.0" style="-fx-background-color: #FF5072;">
          <children>
-            <ImageView fitHeight="26.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="24.0" fitWidth="34.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="file:/D:/Downloads/NFTs/oops_NFT-main/src/main/java/com/example/forntend/image/nft.png" />
+                  <Image url="@../../../../java/com/example/forntend/image/rarible.png" />
                </image>
             </ImageView>
-            <Label layoutX="33.0" text="NFTS COLECTION" textFill="#0a0a0a">
+            <Label layoutX="33.0" prefHeight="25.0" prefWidth="139.0" text="RARIBLE" textFill="#0a0a0a">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
@@ -129,7 +134,7 @@
             </ImageView>
          </children>
       </Pane>
-      <Pane fx:id="slider" layoutY="66.0" prefHeight="441.0" prefWidth="158.0" style="-fx-background-color: #FF5072;">
+      <Pane fx:id="slider" layoutY="62.0" prefHeight="448.0" prefWidth="158.0" style="-fx-background-color: #FF5072;">
          <children>
             <VBox layoutX="1.0" layoutY="78.0" prefHeight="282.0" prefWidth="156.0">
                <children>
